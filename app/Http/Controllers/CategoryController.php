@@ -40,6 +40,8 @@ class CategoryController extends Controller
         Category::create([
             'name' => request('name')
         ]);
+
+        return redirect()->back()->with('message', 'カテゴリーが追加されました。');
     }
 
     /**
