@@ -15,13 +15,14 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// 顧客用画面
+Route::get('/', [ProductController::class, 'productTop']);
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+// カテゴリー画面
 Route::resource('category', CategoryController::class);
+// 商品画面
 Route::resource('product',ProductController::class);

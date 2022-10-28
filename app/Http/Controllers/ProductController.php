@@ -154,4 +154,9 @@ class ProductController extends Controller
         $product->delete();
         return to_route('product.index')->with('message', '商品情報が削除されました。');
     }
+
+    public function ProductTop() {
+        $categories = Category::latest()->get();
+        return view('product.top', compact('categories'));
+    }
 }
