@@ -40,6 +40,12 @@ class CategoryController extends Controller
     {
         // return dd($request->all());
 
+        request()->validate(
+            ['name' => 'required|unique:categories'],
+            ['name.required' => 'カテゴリーを入力してください。',
+            'name.unique' => 'そのカテゴリーは既に追記されています。']
+        );
+
         Category::create([
             'name' => request('name')
         ]);
@@ -79,6 +85,12 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        request()->validate(
+            ['name' => 'required|unique:categories'],
+            ['name.required' => 'カテゴリーを入力してください。',
+            'name.unique' => 'そのカテゴリーは既に追記されています。']
+        );
+
         $category = Category::find($id);
         $category->name = request('name');
         $category->save();

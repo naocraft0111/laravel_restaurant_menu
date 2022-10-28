@@ -20,6 +20,9 @@
                     id="categoryAdd"
                     name="name"
                     value="{{ $category->name }}" />
+                @error('name')
+                <p class="text-danger">{{ $message }}</p>
+                @enderror
             </div>
             <button type="submit"
                 class="btn btn-primary">編集</button>
