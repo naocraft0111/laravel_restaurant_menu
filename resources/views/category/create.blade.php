@@ -7,7 +7,8 @@
             <a href="{{ url('/product/create') }}">＜ 戻る</a>
         </div>
 
-        <form>
+        <form action="{{ route('category.store') }}" method="POST">
+            @csrf
             <div class="form-group">
                 <label for="categoryAdd"
                     class="font-weight-bold">新規カテゴリー追加</label>
