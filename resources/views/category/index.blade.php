@@ -43,8 +43,10 @@
                         {{ $category->name }}
                     </td>
                     <td>
-                        <button type="button"
-                            class="btn btn-outline-danger"><i class="far fa-edit"></i> 編集</button>
+                        <a href="{{ route('category.edit', ['category' => $category->id]) }}">
+                            <button type="button"
+                                class="btn btn-outline-danger"><i class="far fa-edit"></i> 編集</button>
+                        </a>
                     </td>
                     <td>
                         <button type="button"
