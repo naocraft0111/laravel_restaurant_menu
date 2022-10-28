@@ -14,7 +14,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('category.index');
+        // return view('category.index');
+        // latest()は新しいもの順でデータを取ってくる
+        $categories = Category::latest()->get();
+        return view('category.index', ['categories' => $categories]);
     }
 
     /**

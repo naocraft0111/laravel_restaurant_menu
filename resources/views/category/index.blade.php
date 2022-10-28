@@ -29,15 +29,18 @@
                 </tr>
             </thead>
             <tbody>
+            @if (count($categories) > 0)
+            {{-- $keyは配列番号が入ってくる --}}
+                @foreach ($categories as $key=>$category)
                 <tr>
                     <th scope="row">
-                        1
+                        {{ $key+1 }}
                     </th>
                     <td>
-                        2020/2/11
+                        {{ $category->created_at->format('y/m/d') }}
                     </td>
                     <td>
-                        グランドメニュー
+                        {{ $category->name }}
                     </td>
                     <td>
                         <button type="button"
@@ -48,6 +51,12 @@
                             class="btn btn-outline-primary"><i class="far fa-trash-alt"></i> 削除</button>
                     </td>
                 </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="5">追加カテゴリーはありません。</td>
+                </tr>
+            @endif
             </tbody>
         </table>
 
