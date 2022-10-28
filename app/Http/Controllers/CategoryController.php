@@ -79,7 +79,10 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = request('name');
+        $category->save();
+        return to_route('category.index')->with('message', 'カテゴリーが編集されました。');
     }
 
     /**
