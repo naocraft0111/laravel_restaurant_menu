@@ -23,6 +23,6 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // カテゴリー画面
-Route::resource('category', CategoryController::class);
+Route::resource('category', CategoryController::class)->middleware('auth');
 // 商品画面
-Route::resource('product',ProductController::class);
+Route::resource('product',ProductController::class)->middleware('auth');
