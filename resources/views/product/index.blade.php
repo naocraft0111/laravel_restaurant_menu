@@ -14,6 +14,11 @@
             </div>
         </div>
 
+        @if (session('message'))
+            <div class="alert alert-success"
+                role="alert">{{ session('message') }}</div>
+        @endif
+
         <table class="table table-bordered">
             <thead class="table-dark">
                 <tr>
@@ -45,48 +50,93 @@
             </thead>
             <tbody>
                 @if (count($products) > 0)
-                @foreach ($products as $key => $product)
-                <tr>
-                    <th scope="row">
-                        {{ $key + 1 }}
-                    </th>
-                    <td style="max-width: 200px;">
-                        <img src="{{ asset('images') }}/{{ $product->image }}"
-                            class="img-fluid" />
-                    </td>
-                    <td>
-                        {{ $product->name }}
-                    </td>
-                    <td style="max-width: 300px;">
-                        {{ $product->description }}
-                    </td>
-                    <td>
-                        {{ $product->price }} 円
-                    </td>
-                    <td>
-                        {{ $product->category->name }}
-                    </td>
-                    <td>
-                        <button type="button"
-                            class="btn btn-outline-danger"><i class="far fa-edit"></i> 編集</button>
-                    </td>
-                    <td>
-                        <button type="button"
-                            class="btn btn-outline-primary"><i class="far fa-trash-alt"></i> 削除</button>
-                    </td>
-                </tr>
-                @endforeach
+                    @foreach ($products as $key => $product)
+                        <tr>
+                            <th scope="row">
+                                {{ $key + 1 }}
+                            </th>
+                            <td style="max-width: 200px;">
+                                <img src="{{ asset('images') }}/{{ $product->image }}"
+                                    class="img-fluid" />
+                            </td>
+                            <td>
+                                {{ $product->name }}
+                            </td>
+                            <td style="max-width: 300px;">
+                                {{ $product->description }}
+                            </td>
+                            <td>
+                                {{ $product->price }} 円
+                            </td>
+                            <td>
+                                {{ $product->category->name }}
+                            </td>
+                            <td>
+                                <a href="{{ route('product.edit', [$product->id]) }}">
+                                    <button type="button"
+                                        class="btn btn-outline-danger"><i class="far fa-edit"></i> 編集</button>
+                                </a>
+                            </td>
+                            <td>
+                                {{-- <button type="button"
+                            class="btn btn-outline-primary"><i class="far fa-trash-alt"></i> 削除</button> --}}
+                                <button type="button"
+                                    class="btn btn-outline-primary"
+                                    data-toggle="modal"
+                                    data-target="#exampleModal{{ $product->id }}"><i class="far fa-trash-alt"></i>
+                                    削除</button>
+                                <!-- Modal -->
+                                <div class="modal fade"
+                                    id="exampleModal{{ $product->id }}"
+                                    tabindex="-1"
+                                    role="dialog"
+                                    aria-labelledby="exampleModalLabel"
+                                    aria-hidden="true">
+                                    <div class="modal-dialog"
+                                        role="document">
+                                        <form action="{{ route('product.destroy', ['product' => $product->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title"
+                                                        id="exampleModalLabel">カテゴリー削除</h5>
+                                                    <button type="button"
+                                                        class="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    本当に削除しますか？
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button"
+                                                        class="btn btn-secondary"
+                                                        data-dismiss="modal">キャンセル</button>
+                                                    <button type="submit"
+                                                        class="btn btn-primary">削除</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 @else
-                <tr>
-                    <td colspan="8">追加された商品情報はありません。</td>
-                </tr>
+                    <tr>
+                        <td colspan="8">追加された商品情報はありません。</td>
+                    </tr>
                 @endif
             </tbody>
         </table>
 
         <div class="d-flex">
             <div class="mx-auto">
-                {{ $products->links("pagination::bootstrap-4") }}
+                {{ $products->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
